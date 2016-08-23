@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spg.apidoc.dao.Dao_Music">
+	<insert id="insertMusic" parameterType="MusicVo">
+		insert into t_music values (#{id},#{name_music},#{id_dj},#{id_class},#{intro},#{content},#{music_address},#{pic_address})
+	</insert>
+</mapper>
+
