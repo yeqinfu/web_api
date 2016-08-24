@@ -1,5 +1,6 @@
 package com.spg.apidoc.controller;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.spg.apidoc.po.UserInfo;
 import com.spg.apidoc.service.MusicService;
 import com.spg.apidoc.service.UserService;
@@ -46,7 +48,7 @@ public class MusicController extends BaseController {
 
 	@RequestMapping(value = "insertMusic", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	@ApiOperation(value = "音乐插入")
-	public ModelAndView insertMusicMethod(
+	public @ResponseBody  ModelAndView insertMusicMethod(
 			@ApiParam(required = true, name = "name_music", value = "音乐名字") @RequestParam(value = "name_music") String name_music,
 			@ApiParam(required = true, name = "id_dj", value = "dj的id") @RequestParam(value = "id_dj") String id_dj,
 			@ApiParam(required = true, name = "id_class", value = "音乐的分类") @RequestParam(value = "id_class") String id_class,
@@ -69,6 +71,31 @@ public class MusicController extends BaseController {
 		mav.setViewName("insertMusicMethod");
 		mav.addObject("MusicVo", music);
 		return mav;
+	}
+	
+	
+	@RequestMapping(value = "getMusic", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@ApiOperation(value = "所有音乐查询")
+	public @ResponseBody  List<MusicVo>  getMusic(
+			@ApiParam(required = true, name = "page", value = "页数") @RequestParam(value = "page") int page,
+			@ApiParam(required = true, name = "pageSize", value = "页码") @RequestParam(value = "pageSize") int pageSize
+			) {
+		
+		List<MusicVo> list=musicService.getMusic(page*pageSize, pageSize);
+		return list;
+	}
+	
+	
+	@RequestMapping(value = "getAllMusic", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@ApiOperation(value = "所有音乐查询")
+	public @ResponseBody  String  getAllMusic(
+			) {
+		List<MusicVo> list=musicService.getAllMusic();
+		 System.out.println(JSONObject.toJSON(list).toString());
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getAllMusic");
+		mav.addObject("List<MusicVo>", list);
+		return JSONObject.toJSON(list).toString();
 	}
 
 }

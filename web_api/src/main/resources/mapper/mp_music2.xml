@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spg.apidoc.dao.Dao_Music">
+	<resultMap type="com.spg.apidoc.vo.MusicVo" id="MusicVoResult">
+		<result column="id" property="id" />
+		<result column="name_music" property="name_music" />
+		<result column="id_dj" property="id_dj" />
+		<result column="id_class" property="id_class" />
+		<result column="intro" property="intro" />
+		<result column="content" property="content" />
+		<result column="music_address" property="music_address" />
+		<result column="pic_address" property="pic_address" />
+	</resultMap>
+	<select id="getAllMusic" resultMap="MusicVoResult">
+		select *
+		from t_music;
+	</select>
+	<select id="getMusic" resultMap="MusicVoResult">
+		select *
+		from t_music limit
+		#{rows，jdbcType=INT},#{offset，jdbcType=INT};
+	</select>
+	
+</mapper>
+
+
