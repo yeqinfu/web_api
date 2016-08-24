@@ -91,11 +91,11 @@ public class MusicController extends BaseController {
 	public @ResponseBody  String  getAllMusic(
 			) {
 		List<MusicVo> list=musicService.getAllMusic();
-		 System.out.println(JSONObject.toJSON(list).toString());
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getAllMusic");
-		mav.addObject("List<MusicVo>", list);
-		return JSONObject.toJSON(list).toString();
+		if (list!=null&&list.size()!=0) {
+			return okResult(list);
+		}else{
+			return failedResult(1, "空数据");
+		}
 	}
 
 }

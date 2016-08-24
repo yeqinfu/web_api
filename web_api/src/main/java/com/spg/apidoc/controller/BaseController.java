@@ -38,7 +38,7 @@ public class BaseController
      *            : 需要返回的数据，可选
      * @return
      */
-    protected String buildSuccessResultInfo(Object resultData)
+    protected String okResult(Object resultData)
     {
         LOGGER.debug(String.format("enter function, %s", resultData));
         BaseResultVo resultVo = new BaseResultVo();
@@ -56,7 +56,7 @@ public class BaseController
      *            ：失败信息
      * @return
      */
-    protected String buildFailedResultInfo(int resultCode, String failedMsg)
+    protected String failedResult(int resultCode, String failedMsg)
     {
         BaseResultVo resultVo = new BaseResultVo(resultCode, failedMsg);
         return JSON.toJSONString(resultVo, feature);

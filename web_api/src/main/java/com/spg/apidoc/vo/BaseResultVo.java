@@ -1,21 +1,10 @@
-/**
- * 
- */
 package com.spg.apidoc.vo;
 
 import java.io.Serializable;
 
 /**
- * 项目名称：forum
- * 
  * @description: 前台基础vo对象
- * 
- * @author Wind-spg
- * 
- * @create_time：2014年10月8日 下午4:08:44
- * 
  * @version V1.0.0
- * 
  */
 public class BaseResultVo implements Serializable
 {

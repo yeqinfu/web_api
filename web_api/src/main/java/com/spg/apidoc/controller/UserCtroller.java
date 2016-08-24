@@ -55,12 +55,12 @@ public class UserCtroller extends BaseController
         LOGGER.debug(String.format("at function, %s", postData));
         if (null == postData || postData.isEmpty())
         {
-            return super.buildFailedResultInfo(-1, "post data is empty!");
+            return super.failedResult(-1, "post data is empty!");
         }
 
         UserInfo user = JSON.parseObject(postData, UserInfo.class);
         int result = userService.addUser(user);
-        return buildSuccessResultInfo(result);
+        return okResult(result);
     }
 
     @ResponseBody
@@ -75,7 +75,7 @@ public class UserCtroller extends BaseController
     {
         UserInfo info = userService.queryUserById(Integer.parseInt(userId));
 
-        return buildSuccessResultInfo(info);
+        return okResult(info);
     }
     
     @ResponseBody

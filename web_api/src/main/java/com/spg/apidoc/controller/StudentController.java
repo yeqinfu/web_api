@@ -31,7 +31,7 @@ public class StudentController extends BaseController
     public @ResponseBody String updateStudent(@ApiParam(required = true) @RequestParam String postData)
     {
         LOGGER.debug(String.format("enter function, %s", postData));
-        return buildSuccessResultInfo(1);
+        return okResult(1);
     }
 
 }
