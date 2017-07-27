@@ -1,11 +1,9 @@
 package com.spg.apidoc.controller;
 
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,14 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.spg.apidoc.po.UserInfo;
 import com.spg.apidoc.service.MusicService;
-import com.spg.apidoc.service.UserService;
-import com.spg.apidoc.vo.BaseResultVo;
 import com.spg.apidoc.vo.MusicVo;
-import com.spg.apidoc.vo.User;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
