@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ppandroid.hx.Utils_hx;
+import com.spg.apidoc.po.LoginBody;
 import com.spg.apidoc.service.HXUserService;
 import com.spg.apidoc.vo.BaseResultVo;
 import com.spg.apidoc.vo.HXUser;
 import com.utils.TextUtils;
+import com.utils.TokenGenerateUtil;
+import com.utils.TokenManager;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
@@ -28,7 +31,6 @@ import com.wordnik.swagger.annotations.ApiParam;
 public class HXController extends BaseController {
 
 	private static final Log LOGGER = LogFactory.getLog(UserCtroller.class);
-	@Resource
 	@Autowired
 	HXUserService hxService;
 	@ResponseBody
@@ -40,7 +42,7 @@ public class HXController extends BaseController {
 			HttpServletRequest request) {
 		//LOGGER.debug(String.format("at function, %s", userName));
 		if (TextUtils.isEmpty(userName,userPassword)) {
-			return super.failedResult(-1, "用户或者密码不能为空");
+			return super.failedResult(-1001, "用户或者密码不能为空");
 		}
 		List<HXUser> list=hxService.checkUserName(userName);
 		//用户名字重复
@@ -60,7 +62,56 @@ public class HXController extends BaseController {
 			return okResult(result);
 			
 		}else{
-			return super.failedResult(-1, "环信注册失败");
+			return super.failedResult(-1003, "环信注册失败");
 		}
 	}
+
+	
+
+	@ResponseBody
+	@RequestMapping(value = "loginSystem", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@ApiOperation(value = "用户登录", httpMethod = "POST", response = BaseResultVo.class, notes = "登录")
+	public String loginSystem(
+			@ApiParam(required = true, value = "用户名字") @RequestParam(value = "userName") String userName,
+			@ApiParam(required = true, value = "用户密码") @RequestParam(value = "userPassword") String userPassword,
+			HttpServletRequest request) {
+		//LOGGER.debug(String.format("at function, %s", userName));
+		if (TextUtils.isEmpty(userName,userPassword)) {
+			return super.failedResult(-1001, "用户或者密码不能为空");
+		}
+		List<HXUser> list=hxService.checkUserName(userName);
+		//用户名字重复
+		if (list!=null||list.size()>0) {
+			if (!list.get(0).getPassword().equals(userPassword)) {
+				return super.failedResult(-1005, "密码错误");
+				
+			}
+			LoginBody body=new LoginBody();
+			body.setHxid(list.get(0).getHxid());
+			body.setHxpassword(list.get(0).getHxpassword());
+			//System.out.println(TokenGenerateUtil.getToken());
+			body.setToken(TokenGenerateUtil.getToken());
+			TokenManager.addToken(body.getToken(), userName);
+			body.setUser_name(list.get(0).getUser_name());
+			return super.okResult(body);
+		}else{
+			return super.failedResult(-1003, "当前用户不存在！");
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

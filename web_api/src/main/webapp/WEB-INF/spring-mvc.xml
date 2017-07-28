@@ -16,7 +16,7 @@
 
 	<bean class="com.spg.apidoc.common.configer.MySwaggerConfig" />
 
-	<context:component-scan base-package="com.spg" />
+	<context:component-scan base-package="com.spg.**.controller" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

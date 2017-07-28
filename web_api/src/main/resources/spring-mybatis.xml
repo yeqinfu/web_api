@@ -18,6 +18,16 @@
 	<!-- 引入jdbc配置文件 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     
+    	<!-- 使用注解声明 -->
+	<context:annotation-config />
+	<context:component-scan
+		base-package="com.spg.apidoc">
+		<!-- 排除扫描的组件 -->
+		<context:exclude-filter type="regex"
+			expression="com.spg.*.controller" />
+	</context:component-scan>
+    
+    
 	<!--本示例采用DBCP连接池。 连接池配置如下 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="${jdbc_driverClassName}" />

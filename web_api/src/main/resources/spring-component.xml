@@ -22,6 +22,5 @@
 	<!-- </bean> -->
 	<!-- creates a controller at /api-docs from this uri, which serves swagger's 
 		raw documentation in JSON format. -->
-	
 
 </beans>
