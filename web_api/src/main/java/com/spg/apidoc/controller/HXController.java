@@ -1,5 +1,6 @@
 package com.spg.apidoc.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -40,6 +41,11 @@ public class HXController extends BaseController {
 		//LOGGER.debug(String.format("at function, %s", userName));
 		if (TextUtils.isEmpty(userName,userPassword)) {
 			return super.failedResult(-1, "用户或者密码不能为空");
+		}
+		List<HXUser> list=hxService.checkUserName(userName);
+		//用户名字重复
+		if (list!=null||list.size()>0) {
+			return super.failedResult(-1002, "用户名字已经存在！");
 		}
 		String hxId=UUID.randomUUID().toString();
 		String hxPassWord=UUID.randomUUID().toString();

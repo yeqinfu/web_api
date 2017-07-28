@@ -1,5 +1,7 @@
 package com.spg.apidoc.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,10 @@ public class HXUserServiceImpl implements HXUserService{
 	private HXUserDao hxUserDao;
 	public int addUser(HXUser user) {
 		return hxUserDao.addUser(user);
+	}
+	public List<HXUser> checkUserName(String userName) {
+		// TODO Auto-generated method stub
+		return hxUserDao.checkUserName(userName);
 	}
 
 }
