@@ -17,10 +17,29 @@ public class TokenManager {
     }  
   
     //复合结构体，含登录的User和过期时间expried两个成员以及最后一次操作的时间  
-    private static class Token {  
+    public static class Token {  
         private String userName;//登录用户名  
         private Date expired; //过期时间  
         private Date lastOperate; // 最近一次操作的时间  
+		public String getUserName() {
+			return userName;
+		}
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+		public Date getExpired() {
+			return expired;
+		}
+		public void setExpired(Date expired) {
+			this.expired = expired;
+		}
+		public Date getLastOperate() {
+			return lastOperate;
+		}
+		public void setLastOperate(Date lastOperate) {
+			this.lastOperate = lastOperate;
+		}
+        
     }  
   
     //令牌存储结构 ConcurrentHashMap：支持同步的HashMap  
