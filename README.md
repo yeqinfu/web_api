@@ -1,6 +1,6 @@
 # web_api
 my web api test for android app
-这个服务端东西很杂，都是例子。有一个controller是对应[环信android客户端](link:https://github.com/yeqinfu/hx-im)的服务端。
+这个服务端东西很杂，都是例子。有一个controller是对应 [环信android客户端](https://github.com/yeqinfu/hx-im) 的服务端。
 里面有swaggerio呈现的api文档，可以提供测试访问（http://localhost/web_api/）
 ##### 关于环信
 + 注册接口，服务端向环信注册账号，存服务器操作，并返回相关信息
