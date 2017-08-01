@@ -23,10 +23,8 @@ public class Utils_hx {
 	public static final MediaType TYPE = MediaType.parse("application/json; charset=utf-8");
 	// 获取环信token
 	public static String queryToken() {
-		if (!HXConfig.HXToken.isEmpty()) { 
-			return HXConfig.HXToken;
-		}
 		String url = HXConfig.hx_baseurl + "/" + HXConfig.org_name + "/" + HXConfig.app_name + "/token";
+		System.out.println("获取hx token="+url);
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("grant_type", "client_credentials");
 		jsonObject.put("client_id", HXConfig.clientId);
@@ -49,9 +47,11 @@ public class Utils_hx {
 	 * @return
 	 */
 	public static String getHXToken(){
-
+		if (!HXConfig.HXToken.isEmpty()) { 
+			return HXConfig.HXToken;
+		}
 		String json=queryToken();
-		System.out.println("json--->"+json);
+		System.out.println("获取环形token response--->"+json);
 		HXTokenVo body=com.alibaba.fastjson.JSON.parseObject(json,HXTokenVo.class);
 		HXConfig.HXToken=body.getAccess_token();
 		return HXConfig.HXToken;
@@ -60,15 +60,17 @@ public class Utils_hx {
 	/*
 	 * 环信用户注册
 	 */
-	public static String registerHXUser(String userName,String password){
+	public static String registerHXUser(String userName,String password,String nickName){
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("username", userName);
 		jsonObject.put("password", password);
-		JSONObject params=new JSONObject();
+		jsonObject.put("nickname", nickName);
+	/*	JSONObject params=new JSONObject();
 		params.put("Authorization", "Bearer "+getHXToken());
-		params.put("users", jsonObject.toJSONString());
+		params.put("users", jsonObject.toJSONString());*/
 		RequestBody body = RequestBody.create(TYPE, jsonObject.toJSONString());
 		String url= HXConfig.hx_baseurl + "/" + HXConfig.org_name + "/" + HXConfig.app_name + "/users";
+		System.out.println("注册环形用户url"+url);
 		Request request = new Request.Builder().url(url).post(body).build();
 		Response response = null;
 		try {
@@ -83,9 +85,9 @@ public class Utils_hx {
 	}
 
 
-	public static boolean registerUser(String userName,String password){
-		String string=registerHXUser(userName, password);
-		System.out.println("+===>"+string);
+	public static boolean registerUser(String userName,String password,String nickName){
+		String string=registerHXUser(userName, password,nickName);
+		System.out.println("注册response:"+string);
 		HXUserVo body=JSON.parseObject(string,HXUserVo.class);
 		//注册成功
 		if (body!=null) {
@@ -93,5 +95,23 @@ public class Utils_hx {
 		}else{
 			return false;
 		}
+	}
+	
+	public static void setHXUserNickName(String userId,String nickName){
+		String url= HXConfig.hx_baseurl + "/" + HXConfig.org_name + "/" + HXConfig.app_name + "/users/"+userId;
+		JSONObject jsonObject=new JSONObject();
+		jsonObject.put("nickname", nickName);
+		RequestBody body = RequestBody.create(TYPE, jsonObject.toJSONString());
+		Request request = new Request.Builder().addHeader("Authorization", "Bearer "+Utils_hx.getHXToken()).url(url).put(body).build();
+		Response response = null;
+		try {
+			response = client.newCall(request).execute();
+			System.out.println("昵称设置"+response.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

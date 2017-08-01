@@ -7,4 +7,6 @@ import com.spg.apidoc.vo.HXUser;
 public interface HXUserService {
 	  int addUser(HXUser user);
 	  List<HXUser> checkUserName(String userName);
+	  List<HXUser> findFriends(String key);
+
 }

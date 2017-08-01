@@ -22,5 +22,9 @@ public class HXUserServiceImpl implements HXUserService{
 		// TODO Auto-generated method stub
 		return hxUserDao.checkUserName(userName);
 	}
+	@Override
+	public List<HXUser> findFriends(String key) {
+		return hxUserDao.findFriends(key);
+	}
 
 }

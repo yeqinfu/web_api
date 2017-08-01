@@ -17,7 +17,11 @@
 		(#{id},#{user_name},#{hxid},#{hxpassword},#{password})
 	</insert>
 	<select id="checkUserName" resultMap="HXUserResult">
-		select * from t_user where user_name=#{userName}
+		select * from t_user where
+		user_name=#{userName}
+	</select>
+	<select id="findFriends" resultMap="HXUserResult">
+		select * from t_user where user_name like CONCAT(CONCAT('%', #{key}), '%');
 	</select>
 
 </mapper>

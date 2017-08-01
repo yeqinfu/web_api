@@ -48,12 +48,12 @@ public class HXController extends BaseController {
 		}
 		List<HXUser> list = hxService.checkUserName(userName);
 		// 用户名字重复
-		if (list != null || list.size() > 0) {
+		if (list == null || list.size() > 0) {
 			return super.failedResult(-1002, "用户名字已经存在！");
 		}
-		String hxId = UUID.randomUUID().toString();
+		String hxId =UUID.randomUUID().toString().replaceAll("-", "");
 		String hxPassWord = UUID.randomUUID().toString();
-		if (Utils_hx.registerUser(hxId, hxPassWord)) {
+		if (Utils_hx.registerUser(hxId, hxPassWord,userName)) {
 			HXUser hxUser = new HXUser();
 			hxUser.setId(UUID.randomUUID().toString());
 			hxUser.setHxid(hxId);
@@ -81,7 +81,7 @@ public class HXController extends BaseController {
 		}
 		List<HXUser> list = hxService.checkUserName(userName);
 		// 用户名字重复
-		if (list != null || list.size() > 0) {
+		if (list != null&& list.size() > 0) {
 			if (!list.get(0).getPassword().equals(userPassword)) {
 				return super.failedResult(-1005, "密码错误");
 
@@ -104,6 +104,16 @@ public class HXController extends BaseController {
 	@RequestMapping(value = "queryTokenList", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String queryTokenList() {
 		return okResult(TokenManager.DATA_MAP);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "findFriends", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String findFriends(@ApiParam(required = true, value = "关键字") @RequestParam(value = "keyName") String keyName) {
+		if (TextUtils.isEmpty(keyName)) {
+			return failedResult(-1, "关键字不能为空");
+		}
+		
+		return okResult(hxService.findFriends(keyName));
 	}
 
 }

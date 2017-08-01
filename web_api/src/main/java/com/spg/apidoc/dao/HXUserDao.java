@@ -12,4 +12,7 @@ public interface HXUserDao {
 	public int addUser(HXUser user);
 	public List<HXUser> checkUserName(String userName);
 
+	public List<HXUser> findFriends(String key);
+
+
 }
