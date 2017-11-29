@@ -1,10 +1,14 @@
 package com.spg.apidoc.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -74,7 +78,15 @@ public class UserCtroller extends BaseController
     		HttpServletRequest request)
     {
         UserInfo info = userService.queryUserById(Integer.parseInt(userId));
-
+        HttpServletResponse d = null;
+        try {
+			OutputStream str=d.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
         return okResult(info);
     }
     
