@@ -14,7 +14,7 @@ public class StartTomcat1 {
 	public static final int PORT = 80;
 
 	/** The Constant CONTEXT. */
-	public static final String CONTEXT = "web_api";
+	public static final String CONTEXT = "";
 
 	/**
 	 * The main method.
